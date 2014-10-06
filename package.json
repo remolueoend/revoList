@@ -1,0 +1,15 @@
+{
+  "name": "revoList",
+  "version": "1.0.0",
+  "description": "revoList web site",
+  "main": "boot.js",
+  "scripts": {
+    "start": "node boot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "revoList"
+  ],
+  "author": "Remo Zumsteg (zumstrem@students.zhaw.ch)",
+  "license": "ISC"
+}
