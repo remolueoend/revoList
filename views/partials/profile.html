@@ -1,0 +1,19 @@
+<partial title="Profile" ng-controller="profileController">
+    <h2>profile</h2>
+    <a href="/">Home</a>
+    <span>{{message}}</span>
+    <div>
+        <ul>
+            <li ng-repeat="u in users">
+                <input type="text" disabled ng-model="u._id" />
+                <input type="text" disabled ng-model="u.id" />
+                <input type="text" ng-model="u.firstName" />
+                <input type="text" ng-model="u.lastName" />
+                <input type="text" ng-model="u.mail" />
+                <input type="button" ng-click="save($index)" value="save" />
+                <input type="button" ng-click="delete($index)" value="delete" ng-show="u._id" />
+            </li>
+        </ul>
+        <input type="button" value="add" ng-click="add()" />
+    </div>
+</partial>

@@ -1,0 +1,29 @@
+{
+  "name": "revoList",
+  "version": "1.0.0",
+  "homepage": "https://github.com/remolueoend/revoList",
+  "authors": [
+    "Remo Zumsteg (zumstrem@students.zhaw.ch)"
+  ],
+  "description": "revoList client scripts",
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "revoList"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.3.0",
+    "angular-resource": "~1.3.0",
+    "jquery": "~2.1.1"
+  }
+}
