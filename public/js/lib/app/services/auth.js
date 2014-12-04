@@ -4,11 +4,12 @@
 
 'use strict';
 
-revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', function($http, config, fbAuth, $q){
+revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function($http, config, fbAuth, $q, log){
 
     var isAuthenticating = false,
         authDeferred,
-        user;
+        user,
+        logger = new log('auth');
 
     function auth(){
         if(!isAuthenticating){
@@ -20,7 +21,7 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', function($http,
 
                 $http({
                     method: 'POST',
-                    url: ac.server + 'oauth/token',
+                    url: ac.base.replace('{{path}}', '/oauth/token'),
                     data: $.param({username: creds.uid, password: creds.accessToken, grant_type: 'password'}),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -43,15 +44,46 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', function($http,
         return authDeferred.promise;
     }
 
-    auth.user = function(){
-        var d = $q.defer();
-        auth().then(function(){
-            d.resolve(user);
-        });
-        return d.promise;
-    };
+    /**
+     * Returns a promise resolving the current authenticated user.
+     */
+    auth.user = (function(){
+
+        var _user;
+
+        function _getUser(){
+            return _user;
+        }
+
+        function _setUser(usr){
+            _user = usr;
+        }
+
+        function user(){
+            var d = $q.defer();
+
+            var u = _getUser();
+            if(typeof u === 'undefined'){
+                auth().then(function(authResp){
+                    _setUser();
+                    d.resolve();
+                });
+            }else{
+                d.resolve(u);
+            }
+
+            return d.promise;
+        }
 
 
+        return user;
+
+    })();
+
+
+    /**
+     * Returns a promise resolving the current used access token.
+     */
     auth.accessToken = (function() {
 
         function _setAccessToken(authResp){

@@ -4,7 +4,9 @@
 
 'use strict';
 
-revoList.app.factory('fbAuth', ['$q', function($q){
+revoList.app.factory('fbAuth', ['$q', '$modal', 'log', function($q, $modal, log){
+
+    var logger = new log('fbAuth');
 
     function authInfo(fb){
         var d = $q.defer();
@@ -20,9 +22,11 @@ revoList.app.factory('fbAuth', ['$q', function($q){
             if(response.status === 'connected'){
                 d.resolve(response.authResponse);
             }else{
-                FB.login(function(response){
-                    d.resolve(response.authResponse);
-                });
+                logger.info('starting Facebook authentication process');
+                $modal.open({templateUrl: '/partials/logon', keyboard: false, size: 'md', backdrop: 'static'})
+                    .result.then(function(response){
+                        d.resolve(response);
+                    });
             }
         });
 

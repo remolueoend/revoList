@@ -1,2 +1,10 @@
 .idea
-js/bower_components
+log
+node_modules
+.sass-cache
+public/js/bower_components
+public/js/dist
+public/style/dist/
+
+
+

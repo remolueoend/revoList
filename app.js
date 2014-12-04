@@ -4,7 +4,8 @@ var express = require('express'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    routes = require('./routes');
+    routes = require('./routes'),
+    winston = require('winston');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 app.get('/config', routes.config);
+app.post('/log/:level', routes.log);
 app.get('*', routes.index);
 
 // catch 404 and forward to error handler
@@ -45,6 +47,18 @@ app.use(function(err, req, res, next) {
         error: app.get('env') === 'development' ? err : {}
     });
 });
+
+
+app.log = {
+    client: new winston.Logger({
+        transports: [
+            new winston.transports.File({
+                filename: path.join(__dirname, 'log/client.log')
+            }),
+            new winston.transports.Console()
+        ]
+    })
+};
 
 
 module.exports = app;

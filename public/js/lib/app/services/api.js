@@ -40,6 +40,14 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
 
 
     /**
+     * Object caching api instances based on their entity type.
+     * @type {{}}
+     * @private
+     */
+    var _apiInstanceCache = {};
+
+
+    /**
      * Api constructor providing an HTTP interface to the API.
      * @param {string} [entityType] The name of the entity type. Must be set
      * for RESTful calls.
@@ -47,7 +55,10 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
      */
     function Api(entityType){
         if(!(this instanceof Api)){
-            return new Api(entityType);
+            if(!_apiInstanceCache[entityType]) {
+                _apiInstanceCache[entityType] = new Api(entityType);
+            }
+            return _apiInstanceCache[entityType];
         }
 
         this.entityType = entityType;
@@ -102,13 +113,14 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
         },
 
         /**
-         * Returns a promise resolving a single entity instance.
+         * Returns a promise resolving a collection of entites.
+         *
          * @returns {promise} An angular promise
          */
-        query: function(){
+        query: function(filter){
             var d = $q.defer();
             this.resource().then(function(res){
-                res.query(function(data){
+                res.query(filter, function(data){
                     d.resolve(data);
                 });
             });
@@ -118,6 +130,7 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
 
         /**
          * Creates a new entity on the server based on the given model.
+         *
          * @param {object} model The model data of the entity
          * @returns {promise} An angular promise
          */
@@ -134,7 +147,8 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
         },
 
         /**
-         * Updates the given model
+         * Updates the given model.
+         *
          * @param model
          * @returns {promise}
          */
@@ -151,7 +165,8 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
         },
 
         /**
-         * Deletes the given model
+         * Deletes the given model.
+         *
          * @param model
          * @returns promise}
          */
@@ -166,6 +181,29 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
 
             return d.promise;
         }
+    };
+
+
+    /**
+     * Calls the provided url on the API.
+     * @param {string} path The url to call
+     * @param {object} config The request config.
+     */
+    Api.url = function(path, config){
+        config = config || {};
+        config.params = config.params || {};
+        if(path[0] !== '/') path = '/' + path;
+        var d = $q.defer();
+
+        $q.all([apiConf(), auth.accessToken()]).then(function(r){
+            config.url = r[0].base.replace('{{path}}', path);
+            config.params.access_token = r[1];
+            $http(config).then(function(resp){
+                d.resolve(resp.data);
+            });
+        });
+
+        return d.promise;
     };
 
     return Api;
