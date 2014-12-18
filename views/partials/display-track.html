@@ -1,10 +1,27 @@
 <div>
-    <div class="col-sm-3">
-        <img style="width: 100%; height: auto;" src="{{track.thumbnail}}" />
-    </div>
-    <div class="col-sm-9">
-        <div class="title">
-            <a ng-click="play()"><h5>{{track.title}}</h5></a> by {{track.author}}
+    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 track-cell">
+        <div class="thumbnail rl-overlay" ng-click="play()">
+            <div>
+                <div class="track-thumbnail ratio-box r2-1" style="overflow: hidden;">
+                    <div class="content">
+                        <img style="width: 100%; height: auto;" src="{{track.thumbnail || '/images/default-thumbnail.png'}}" />
+                    </div>
+                </div>
+                <div class="meta">
+                    <div class="title">
+                        <h5>{{track.title}}</h5>
+                    </div>
+                    <div class="author">
+                        by {{track.author}}
+                    </div>
+                </div>
+                <div class="play-overlay overlay">
+                    <div class="arrow-right"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-default" ng-click="addToPlaylist()">Add to Playlist</a>
         </div>
     </div>
 </div>

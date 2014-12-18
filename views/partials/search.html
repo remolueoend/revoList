@@ -4,7 +4,7 @@
             <h1 class="page-header">Search</h1>
         </div>
     </div>
-    <div class="results">
-        <div class="row" display-track ng-repeat="r in result" track="r" i="$index" playlist="result"></div>
+    <div class="results row">
+        <div class="display-track display-{{r.provider}}" ng-repeat="r in result" track="r" i="$index" playlist="result"></div>
     </div>
 </partial>

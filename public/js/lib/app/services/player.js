@@ -18,7 +18,7 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
             ready: function(){ _this.play(); },
             progress: function(p){ _this.trigger('progress', p); }
         };
-        this.listeners = { playing: [], paused: [], progress: [] };
+        this.listeners = { playing: [], paused: [], progress: [], trackLoaded: [] };
     }
     Player.prototype = {
         playTrack: function(playlist, index){
@@ -42,35 +42,40 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
             }
 
             this.player.loadTrack(track);
+            this.trigger('trackLoaded', track);
 
         },
 
         next: function(){
-            if(currentIndex < currentPlaylist.length - 1){
-                currentIndex++;
-            }else{
-                currentIndex = 0;
+            if(currentPlaylist) {
+                if (currentIndex < currentPlaylist.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                this.loadTrack(currentPlaylist[currentIndex]);
             }
-            this.loadTrack(currentPlaylist[currentIndex]);
         },
 
         previous: function(){
-            if(currentIndex > 0){
-                currentIndex--;
-            }else{
-                currentIndex = currentPlaylist.length - 1;
+            if(currentPlaylist) {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = currentPlaylist.length - 1;
+                }
+                this.loadTrack(currentPlaylist[currentIndex]);
             }
-            this.loadTrack(currentPlaylist[currentIndex]);
         },
 
         play: function(){
-            if(this.player){
+            if(this.player && this.currentTrack){
                 this.player.play();
             }
         },
 
         pause: function(){
-            if(this.player){
+            if(this.player && this.currentTrack){
                 this.player.pause();
             }
         },
@@ -84,6 +89,10 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
             this.listeners[event].forEach(function(l){
                 l.apply(void 0, args);
             });
+        },
+
+        seekTo: function(seconds){
+            this.player.seekTo(seconds);
         }
     };
 

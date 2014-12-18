@@ -57,9 +57,15 @@ revoList.app.service('youtubePlayer', [function(){
         },
 
         stop: function(){
+            this.clearInterval();
             if(player){
                 player.stopVideo();
-                window.clearInterval(progressInt);
+            }
+        },
+
+        seekTo: function(seconds){
+            if(player){
+                player.seekTo(seconds, true);
             }
         },
 
@@ -71,19 +77,26 @@ revoList.app.service('youtubePlayer', [function(){
                     break;
                 case YT.PlayerState.ENDED:
                     this.events.ended();
-                    window.clearInterval(progressInt);
+                    this.clearInterval();
                     break;
                 case YT.PlayerState.PAUSED:
                     this.events.paused();
-                    window.clearInterval(progressInt);
+                    this.clearInterval();
                     break;
                 case YT.PlayerState.PLAYING:
                     this.events.playing();
-                    progressInt = window.setInterval(function(){
-                        _this.events.progress(player.getCurrentTime() / player.getDuration());
-                    }, 200);
+                    if(typeof progressInt === 'undefined'){
+                        progressInt = window.setInterval(function(){
+                            _this.events.progress({current: player.getCurrentTime(), duration: player.getDuration()});
+                        }, 200);
+                    }
                     break;
             }
+        },
+
+        clearInterval: function(){
+            window.clearInterval(progressInt);
+            progressInt = undefined;
         }
     };
 

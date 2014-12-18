@@ -52,9 +52,6 @@ app.use(function(err, req, res, next) {
 app.log = {
     client: new winston.Logger({
         transports: [
-            new winston.transports.File({
-                filename: path.join(__dirname, 'log/client.log')
-            }),
             new winston.transports.Console()
         ]
     })

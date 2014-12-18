@@ -1,15 +1,35 @@
+#page-wrapper {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding-bottom: 100px; }
+
+.modal-view-content {
+  padding: 15px; }
+
 #player {
   background-color: #333;
-  height: 80px;
+  height: 100px;
   width: 100%;
   position: fixed;
   bottom: 0;
-  padding: 15px; }
+  padding: 15px;
+  display: none; }
   #player .player-container {
-    position: absolute; }
+    position: absolute;
+    top: 9999px; }
+  #player .current-track-info {
+    color: #fff; }
+    #player .current-track-info .title {
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   #player .progress {
     margin-bottom: 5px;
     height: 3px; }
+  #player .slider {
+    width: 100%;
+    height: 10px; }
+    #player .slider .slider-selection {
+      background: #0480be; }
   #player .controls {
     text-align: center; }
     #player .controls div {
@@ -21,9 +41,74 @@
       position: relative;
       top: -5px;
       background-size: 100%; }
+      #player .controls div:hover {
+        box-shadow: 0 0 10px #fff; }
       #player .controls div.main {
         height: 30px;
         width: 30px;
         top: 0px; }
+
+.ratio-box {
+  width: 100%;
+  position: relative; }
+  .ratio-box:before {
+    content: "";
+    display: block;
+    margin-top: 100%; }
+  .ratio-box > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; }
+  .ratio-box.r2-1:before {
+    margin-top: 50%; }
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #000; }
+
+.display-track .track-cell, .display-playlist .track-cell {
+  margin-bottom: 20px; }
+.display-track .thumbnail, .display-playlist .thumbnail {
+  position: relative;
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-width: 0; }
+  .display-track .thumbnail .meta, .display-playlist .thumbnail .meta {
+    margin-top: 10px; }
+    .display-track .thumbnail .meta h5, .display-playlist .thumbnail .meta h5 {
+      margin: 0; }
+    .display-track .thumbnail .meta .title, .display-track .thumbnail .meta .author, .display-playlist .thumbnail .meta .title, .display-playlist .thumbnail .meta .author {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+  .display-track .thumbnail .play-overlay, .display-playlist .thumbnail .play-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    transition: all 0.2s linear; }
+    .display-track .thumbnail .play-overlay .arrow-right, .display-playlist .thumbnail .play-overlay .arrow-right {
+      border-width: 30px;
+      border-left-color: #fff;
+      margin-top: 22%;
+      margin-left: 47%; }
+.display-track .btn, .display-playlist .btn {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  width: 100%; }
+
+.display-soundcloud .track-thumbnail img {
+  margin-top: -25%; }
 
 /*# sourceMappingURL=main.css.map */

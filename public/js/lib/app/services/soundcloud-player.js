@@ -51,9 +51,28 @@ revoList.app.service('soundcloudPlayer', [function(){
                 _this.events.ended();
             });
             player.bind(SC.Widget.Events.PLAY_PROGRESS, function(e){
-                _this.events.progress(e.relativePosition);
+                _this.getDuration(function(d){
+                    _this.events.progress({current: e.currentPosition / 1000, duration: d / 1000});
+                });
             });
         },
+
+        getDuration: (function(){
+
+            var duration = undefined;
+
+            return function(callback){
+                if(typeof duration !== 'undefined'){
+                    callback(duration);
+                }else{
+                    player.getDuration(function(d){
+                        duration = d;
+                        callback(duration);
+                    });
+                }
+            }
+
+        })(),
 
         play: function(){
             if(player){
@@ -70,6 +89,12 @@ revoList.app.service('soundcloudPlayer', [function(){
         stop: function(){
             if(player){
                 player.pause();
+            }
+        },
+
+        seekTo: function(seconds){
+            if(player){
+                player.seekTo(seconds * 1000);
             }
         }
     };

@@ -4,11 +4,11 @@
 
 'use strict';
 
-revoList.app.controller('searchController', ['$scope', 'apiData', '$location', function($scope, apiData, $location){
+revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams', function($scope, apiData, $routeParams){
 
-    $scope.searchQuery = $location.search().searchQuery;
+    $scope.searchQuery = $routeParams.query;
 
-    apiData.search.query({q: decodeURI($location.search().searchQuery)}).then(function(data){
+    apiData.search.query({q: decodeURI($scope.searchQuery)}).then(function(data){
         $scope.result = data;
     });
 

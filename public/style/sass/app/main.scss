@@ -1,18 +1,48 @@
+#page-wrapper{
+  max-width: 2000px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+}
+
+.modal-view-content{
+  padding: 15px;
+}
+
 #player{
   background-color: #333;
-  height: 80px;
+  height: 100px;
   width: 100%;
   position: fixed;
   bottom: 0;
   padding: 15px;
+  display: none;
 
   .player-container{
     position: absolute;
+    top: 9999px;
+  }
+
+  .current-track-info{
+    color: #fff;
+
+    .title{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .progress{
     margin-bottom: 5px;
     height: 3px;
+  }
+
+  .slider{
+    width: 100%;
+    height: 10px;
+
+    .slider-selection{
+      background: #0480be;
+    }
   }
 
   .controls{
@@ -28,6 +58,10 @@
       top: -5px;
       background-size: 100%;
 
+      &:hover{
+        box-shadow: 0 0 10px #fff;
+      }
+
       &.main{
         height: 30px;
         width: 30px;
@@ -37,3 +71,98 @@
   }
 }
 
+.ratio-box{
+  width: 100%;
+  position: relative;
+
+  &:before{
+    content: "";
+    display: block;
+    margin-top: 100%;
+  }
+
+  >.content{
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &.r2-1:before{
+    margin-top: 50%;
+  }
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #000;
+}
+
+
+.display-track, .display-playlist{
+
+  .track-cell{
+    margin-bottom: 20px;
+  }
+
+  .thumbnail{
+    position: relative;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-width: 0;
+
+    .meta{
+      margin-top: 10px;
+
+      h5{
+        margin: 0;
+      }
+
+      .title, .author{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .play-overlay{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      transition: all 0.2s linear;
+
+      .arrow-right{
+        border-width: 30px;
+        border-left-color: #fff;
+        margin-top: 22%;
+        margin-left: 47%;
+      }
+    }
+  }
+
+  .btn{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    width: 100%;
+  }
+
+}
+
+.display-soundcloud{
+  .track-thumbnail{
+    img{
+      margin-top: -25%;
+    }
+  }
+}

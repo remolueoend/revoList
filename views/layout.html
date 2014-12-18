@@ -59,13 +59,13 @@
 
         <!-- HEADER -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
+            <div class="navbar-header" style="width: 100%">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <a class="navbar-brand" href="/">[revoList]</a>
                     </div>
-                    <div class="col-xs-8 pull-right">
-                        Hey {{currentUser.firstName}}!
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align: right;">
+                        <div style="padding: 15px">Hey {{currentUser.firstName}}!</div>
                     </div>
                 </div>
             </div>
@@ -99,12 +99,15 @@
         <script type="text/javascript" src="/js/lib/soundcloud-api.js"></script>
 
         <!-- base -->
+        <script type="text/javascript" src="/js/bower_components/modernizr/modernizr.js"></script>
         <script type="text/javascript" src="/js/bower_components/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
         <!-- libs -->
+        <script type="text/javascript" src="/js/bower_components/jquery-bridget/jquery.bridget.js"></script>
         <script type="text/javascript" src="/js/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+        <script type="text/javascript" src="/js/bower_components/jquery.cookie/src/jquery.cookie.js"></script>
 
 
         <!-- theme plugins -->
@@ -124,7 +127,6 @@
         <script type="text/javascript" src="/js/bower_components/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script type="text/javascript" src="/js/bower_components/angular-bootstrap-slider/slider.js"></script>
 
         <!-- ANGULARJS APP -->
         <script type="text/javascript" src="/js/dist/app.min.js"></script>

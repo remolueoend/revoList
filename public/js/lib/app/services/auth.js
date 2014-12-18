@@ -25,7 +25,7 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
                     data: $.param({username: creds.uid, password: creds.accessToken, grant_type: 'password'}),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Basic ' + btoa('REMO_CLIENT:REMO_SECRET')
+                        'Authorization': 'Basic ' + btoa('revoList_webApp_client:revoList_webApp_secret')
                     }
                 })
                     .success(function(resp){
@@ -87,21 +87,18 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
     auth.accessToken = (function() {
 
         function _setAccessToken(authResp){
-            sessionStorage.setItem("revoList.at", authResp.access_token);
-            setTimeout(function () {
-                sessionStorage.removeItem("revoList.at");
-            }, authResp.expires_in * 1000);
+            $.cookie('revoList.at', authResp.access_token, {expires: 1});
         }
 
         function _getAccessToken(){
-            return sessionStorage.getItem("revoList.at");
+            return $.cookie('revoList.at');
         }
 
         function accessToken(force) {
             var d = $q.defer();
 
             var _accessToken = _getAccessToken();
-            if(_accessToken === null || force){
+            if(_accessToken == null || force){
                 auth().then(function(authResp){
                     _setAccessToken(authResp);
                     d.resolve(authResp.access_token);

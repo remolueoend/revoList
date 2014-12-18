@@ -6,7 +6,7 @@
 
 revoList.app.directive('playerUi', function(){
 
-    function controller($scope, player){
+    function controller($scope, $element, player){
 
         $scope.player = player;
         player.on('playing', function(){
@@ -19,16 +19,15 @@ revoList.app.directive('playerUi', function(){
                 $scope.isPlaying = false;
             });
         });
-        player.on('progress', function(prog){
-            $scope.$apply(function(){
-                $scope.progress = 100 * prog;
-            });
+        player.on('trackLoaded', function(track){
+            $scope.currentTrack = track;
+            $($element).show();
         });
     }
 
     return {
         restrict: 'AEC',
-        controller: ['$scope', 'player', controller],
+        controller: ['$scope', '$element', 'player', controller],
         scope: {},
         templateUrl: '/partials/player'
     };

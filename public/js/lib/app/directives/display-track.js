@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.directive('displayTrack', ['player', function(player){
+revoList.app.directive('displayTrack', ['player', '$modal', function(player, $modal){
 
     function controller($scope) {
         $scope.play = function(){
@@ -12,11 +12,9 @@ revoList.app.directive('displayTrack', ['player', function(player){
         };
 
         $scope.addToPlaylist = function(){
-
-        };
-
-        $scope.like = function(){
-
+            var mScope = $scope.$new();
+            mScope.track = $scope.track;
+            $modal.open({templateUrl: '/partials/addToPlaylist', size: 'md', scope: mScope});
         };
     }
 

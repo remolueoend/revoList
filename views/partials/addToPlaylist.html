@@ -1,0 +1,26 @@
+<partial title="Add to playlist" ng-controller="addToModalController">
+    <div class="modal-header">
+        <h3>Add this track to a playlist!</h3>
+    </div>
+    <div class="modal-view-content">
+        <div class="playlists">
+            <div ng-repeat="p in playlists" ng-controller="addToModalPlaylistController">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="p.selected">
+                        {{p.title}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="new-playlist-container">
+            <h6>Or create a new playlist for this track:</h6>
+            <form ng-submit="addToNewPlaylist()">
+                <input class="form-control" type="text" ng-model="newPlaylist" placeholder="playlist name" />
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-success" ng-click="$close()">Finish</a>
+    </div>
+</partial>

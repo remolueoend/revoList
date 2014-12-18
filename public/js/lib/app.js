@@ -14,7 +14,7 @@ var revoList = (function(){
          * Angular app instance of the revoList app.
          * @type {module}
          */
-        app: angular.module('revo-list', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ui.bootstrap-slider']),
+        app: angular.module('revo-list', ['ngRoute', 'ngResource', 'ui.bootstrap']),
 
         /**
          * Title of app, used for page titles and so on
@@ -28,8 +28,19 @@ revoList.app
         $routeProvider
             .when('/', {
                 templateUrl: 'partials/profile'
-            }).
-            when('/:partial', {
+            })
+            .when('/profile/:user', {
+                templateUrl: 'partials/profile'
+            })
+            .when('/search/:query', {
+                templateUrl: function(){
+                    return 'partials/search';
+                }
+            })
+            .when('/profile/:userId', {
+                templateUrl: 'partials/profile'
+            })
+            .when('/:partial', {
                 controller: 'defaultController',
                 templateUrl: function(routeValues){
                     return 'partials/' + routeValues.partial;

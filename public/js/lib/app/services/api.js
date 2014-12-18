@@ -104,7 +104,7 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
         get: function(id){
             var d = $q.defer();
             this.resource().then(function(res){
-                res.get({id: id}).then(function(data){
+                res.get({id: id}, function(data){
                     d.resolve(data);
                 });
             });
