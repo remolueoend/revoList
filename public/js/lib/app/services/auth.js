@@ -86,26 +86,35 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
      */
     auth.accessToken = (function() {
 
+        var _currentVersion = '1';
+
         function _setAccessToken(host, authResp){
-            $.cookie('revoList@' + host, authResp.access_token, {expires: 1});
+            $.cookie('revoList_' + host, authResp.access_token, {expires: 1, path: '/'});
+            $.cookie('revoList_' + host + '_v', _currentVersion, {path: '/'});
         }
 
-        function _getAccessToken(){
-            return $.cookie('revoList.at');
+        function _getAccessToken(host){
+            if($.cookie('revoList_' + host + '_v') === _currentVersion){
+                return $.cookie('revoList_' + host);
+            }else{
+                return void 0;
+            }
         }
 
         function accessToken(force) {
             var d = $q.defer();
 
-            var _accessToken = _getAccessToken();
-            if(_accessToken == null || force){
-                $q.all([config(), auth()]).then(function(resp){
-                    _setAccessToken(resp[0].api.host, resp[1]);
-                    d.resolve(resp[1].access_token);
-                });
-            }else{
-                d.resolve(_accessToken);
-            }
+            config().then(function(cfg){
+                var _accessToken = _getAccessToken(cfg.api.host);
+                if(_accessToken == null || force){
+                    auth().then(function(resp){
+                        _setAccessToken(cfg.api.host, resp);
+                        d.resolve(resp.access_token);
+                    });
+                }else{
+                    d.resolve(_accessToken);
+                }
+            });
 
             return d.promise;
         }
