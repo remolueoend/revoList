@@ -23,6 +23,7 @@ revoList.app.directive('playerUi', ['$rootScope', '$location', function($rootSco
             $scope.currentTrack = track;
             $scope.sourceUrl = sourceUrl;
             $($element).show();
+            $('#wrapper').css('padding-bottom', '100px');
         });
 
         $scope.locateTrack = function(){

@@ -1,7 +1,7 @@
 .navbar .navbar-header .row {
   margin-left: 15px;
   margin-right: 15px; }
-  .navbar .navbar-header .row .col-xs-6 {
+  .navbar .navbar-header .row .col {
     padding-left: 0;
     padding-right: 0; }
 .navbar .navbar-header .nav-button.active {
@@ -11,7 +11,7 @@
 #page-wrapper {
   max-width: 2000px;
   margin: 0 auto;
-  padding-bottom: 100px; }
+  padding-bottom: 15px; }
 
 .modal-view-content {
   padding: 15px; }

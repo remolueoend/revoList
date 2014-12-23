@@ -52,6 +52,16 @@
 
     </script>
 
+    <!-- Mobile detection -->
+    <script type="text/javascript" src="/js/bower_components/mobile-detect/mobile-detect.min.js"></script>
+    <script>
+        var md = new MobileDetect(navigator.userAgent);
+        if(md.mobile() && !md.tablet()){
+            var html = document.body.parentElement;
+            html.className = html.className + ' mobile';
+        }
+    </script>
+
 
 
 
@@ -62,11 +72,11 @@
             <div class="navbar-header" style="width: 100%">
                 <div class="header-content">
                     <div class="row">
-                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="col col-xs-12 col-sm-8 col-md-8 col-lg-8">
                             <a class="nav-button navbar-brand" href="/">Home</a>
                             <a class="nav-button navbar-brand" href="/charts">Playlist Charts</a>
                         </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align: right;">
+                        <div class="col col-sm-4 col-md-4 col-lg-4 hidden-xs" style="text-align: right;">
                             <div style="padding: 15px">Hey {{currentUser.firstName}}!</div>
                         </div>
                     </div>

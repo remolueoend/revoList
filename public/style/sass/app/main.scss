@@ -4,7 +4,7 @@
       margin-left: 15px;
       margin-right: 15px;
 
-      .col-xs-6{
+      .col{
         padding-left: 0;
         padding-right: 0;
       }
@@ -20,7 +20,10 @@
 #page-wrapper{
   max-width: 2000px;
   margin: 0 auto;
-  padding-bottom: 100px;
+  padding-bottom: 15px;
+}
+
+#wrapper{
 }
 
 .modal-view-content{
