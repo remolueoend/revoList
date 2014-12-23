@@ -2,9 +2,9 @@
   "name": "revoList",
   "version": "1.0.0",
   "description": "revoList web site",
-  "main": "bin/www.js",
+  "main": "bin/www",
   "scripts": {
-    "start": "node bin/www.js",
+    "start": "node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
