@@ -86,8 +86,8 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
      */
     auth.accessToken = (function() {
 
-        function _setAccessToken(authResp){
-            $.cookie('revoList.at', authResp.access_token, {expires: 1});
+        function _setAccessToken(host, authResp){
+            $.cookie('revoList@' + host, authResp.access_token, {expires: 1});
         }
 
         function _getAccessToken(){
@@ -99,9 +99,9 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
 
             var _accessToken = _getAccessToken();
             if(_accessToken == null || force){
-                auth().then(function(authResp){
-                    _setAccessToken(authResp);
-                    d.resolve(authResp.access_token);
+                $q.all([config(), auth()]).then(function(resp){
+                    _setAccessToken(resp[0].api.host, resp[1]);
+                    d.resolve(resp[1].access_token);
                 });
             }else{
                 d.resolve(_accessToken);

@@ -16,7 +16,14 @@
         <div class="new-playlist-container">
             <h6>Or create a new playlist for this track:</h6>
             <form ng-submit="addToNewPlaylist()">
-                <input class="form-control" type="text" ng-model="newPlaylist" placeholder="playlist name" />
+                <div class="input-group">
+                    <input class="form-control" type="text" ng-model="newPlaylist" placeholder="playlist title" />
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-save"></i>
+                        </button>
+                    </span>
+                </div>
             </form>
         </div>
     </div>

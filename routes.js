@@ -14,7 +14,7 @@ exports.partials = function (req, res) {
 
 exports.config = function(req, res){
     var apiAddr = ip.address(),
-        apiPort = '3000';
+        apiPort = '2000';
     if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP){
         apiAddr = 'revolistapi-w1we.rhcloud.com';
         apiPort = 80;
@@ -22,9 +22,18 @@ exports.config = function(req, res){
 
     res.json({
         api: {
+            host: apiAddr,
             url: 'http://' + apiAddr + ':' + apiPort + '/:entity/:id?access_token=:accessToken',
             base: 'http://' + apiAddr + ':' + apiPort + '{{path}}'
-        }
+        },
+        FB: (function(){
+            var appId = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP ?
+                '1551776555034153' : '1574452112766597';
+
+            return {
+                appId: appId
+            }
+        })()
     });
 };
 

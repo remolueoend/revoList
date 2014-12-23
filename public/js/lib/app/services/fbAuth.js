@@ -4,30 +4,32 @@
 
 'use strict';
 
-revoList.app.factory('fbAuth', ['$q', '$modal', 'log', function($q, $modal, log){
+revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', function($q, $modal, log, config){
 
     var logger = new log('fbAuth');
 
     function authInfo(fb){
         var d = $q.defer();
 
-        fb.init({
-            appId      : '1551776555034153',
-            xfbml      : false,
-            version    : 'v2.1',
-            status     : true
-        });
+        config().then(function(cfg){
+            fb.init({
+                appId      : cfg.FB.appId,
+                xfbml      : false,
+                version    : 'v2.1',
+                status     : true
+            });
 
-        fb.getLoginStatus(function(response){
-            if(response.status === 'connected'){
-                d.resolve(response.authResponse);
-            }else{
-                logger.info('starting Facebook authentication process');
-                $modal.open({templateUrl: '/partials/logon', keyboard: false, size: 'md', backdrop: 'static'})
-                    .result.then(function(response){
-                        d.resolve(response);
-                    });
-            }
+            fb.getLoginStatus(function(response){
+                if(response.status === 'connected'){
+                    d.resolve(response.authResponse);
+                }else{
+                    logger.info('starting Facebook authentication process');
+                    $modal.open({templateUrl: '/partials/logon', keyboard: false, size: 'md', backdrop: 'static'})
+                        .result.then(function(response){
+                            d.resolve(response);
+                        });
+                }
+            });
         });
 
         return d.promise;
