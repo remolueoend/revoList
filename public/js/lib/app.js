@@ -40,6 +40,9 @@ revoList.app
             .when('/profile/:userId', {
                 templateUrl: 'partials/profile'
             })
+            .when('/playlist/:playlistId', {
+                templateUrl: 'partials/playlist'
+            })
             .when('/:partial', {
                 controller: 'defaultController',
                 templateUrl: function(routeValues){

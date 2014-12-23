@@ -11,6 +11,9 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
         this.isPlaying = false;
         this.currentTrack = undefined;
         this.player = undefined;
+        this.currentPlaylist = [];
+        this.currentIndex = 0;
+        this.sourceUrl = undefined;
         this.events = {
             ended: function(){ _this.next(); },
             paused: function(){ _this.isPlaying = false; _this.trigger('paused'); },
@@ -21,9 +24,10 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
         this.listeners = { playing: [], paused: [], progress: [], trackLoaded: [] };
     }
     Player.prototype = {
-        playTrack: function(playlist, index){
-            currentPlaylist = playlist;
-            currentIndex = index;
+        playTrack: function(playlist, index, sourceUrl){
+            this.currentPlaylist = playlist;
+            this.currentIndex = index;
+            this.sourceUrl = sourceUrl;
             this.loadTrack(playlist[index]);
         },
 
@@ -42,29 +46,29 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
             }
 
             this.player.loadTrack(track);
-            this.trigger('trackLoaded', track);
+            this.trigger('trackLoaded', track, this.sourceUrl);
 
         },
 
         next: function(){
-            if(currentPlaylist) {
-                if (currentIndex < currentPlaylist.length - 1) {
-                    currentIndex++;
+            if(this.currentPlaylist.length) {
+                if (this.currentIndex < this.currentPlaylist.length - 1) {
+                    this.currentIndex++;
                 } else {
-                    currentIndex = 0;
+                    this.currentIndex = 0;
                 }
-                this.loadTrack(currentPlaylist[currentIndex]);
+                this.loadTrack(this.currentPlaylist[this.currentIndex]);
             }
         },
 
         previous: function(){
-            if(currentPlaylist) {
-                if (currentIndex > 0) {
-                    currentIndex--;
+            if(this.currentPlaylist.length) {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
                 } else {
-                    currentIndex = currentPlaylist.length - 1;
+                    this.currentIndex = this.currentPlaylist.length - 1;
                 }
-                this.loadTrack(currentPlaylist[currentIndex]);
+                this.loadTrack(this.currentPlaylist[this.currentIndex]);
             }
         },
 
@@ -81,7 +85,15 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
         },
 
         on: function(event, handler){
+            var _this = this;
             this.listeners[event].push(handler);
+
+            return function(){
+                var i = _this.listeners[event].indexOf(handler);
+                if(i >= 0){
+                    _this.listeners[event].splice(i, 1);
+                }
+            }
         },
 
         trigger: function(event){
@@ -95,9 +107,6 @@ revoList.app.factory('player', ['youtubePlayer', 'soundcloudPlayer', function(yo
             this.player.seekTo(seconds);
         }
     };
-
-    var currentPlaylist = [],
-        currentIndex = 0;
 
     return new Player();
 

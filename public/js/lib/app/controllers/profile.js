@@ -20,7 +20,9 @@ revoList.app.controller('profileController', ['$scope', 'apiData', 'me', '$route
     }
 
     function loadLikes(owner){
-
+        apiData.user.likes(owner).then(function(data){
+            $scope.likes = data;
+        });
     }
 
     function currentUser(){

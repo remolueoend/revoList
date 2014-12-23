@@ -11,7 +11,7 @@ revoList.app.controller('addToModalPlaylistController', ['$scope', function($sco
             if(nv === true){
                 $scope.addToPlaylist($scope.p._id);
             }else{
-                $scope.removeToPlaylist($scope.p._id);
+                $scope.removeFromPlaylist($scope.p._id);
             }
         }
     });

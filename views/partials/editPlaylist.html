@@ -1,0 +1,42 @@
+<partial title="edit playlist" ng-controller="editPlaylistController" id="partial-edit-playlist">
+    <div class="modal-view-content">
+        <h6>Change the title of your playlist:</h6>
+        <form ng-submit="changeTitle()">
+            <div class="input-group">
+                <input class="form-control" type="text" ng-model="newTitle" placeholder="playlist title" />
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-save"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <div ng-show="tracks.length">
+            <br />
+            <h6>Remove tracks from your playlist:</h6>
+            <div class="tracks">
+                <div ng-repeat="t in tracks" class="row thumbnail">
+                    <div class="track-thumbnail col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="ratio-box r2-1">
+                            <div class="content">
+                                <img src="{{t.thumbnail || '/images/default-thumbnail.png'}}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        {{t.title}}
+                    </div>
+                    <div class="actions col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <button class="btn btn-danger pull-right" ng-click="remove($index)">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-danger" ng-click="delete()">Delete Playlist</a>
+        <a class="btn btn-success" ng-click="$close()">Finish</a>
+    </div>
+</partial>

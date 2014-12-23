@@ -9,7 +9,13 @@ revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams'
     $scope.searchQuery = $routeParams.query;
 
     apiData.search.query({q: decodeURI($scope.searchQuery)}).then(function(data){
-        $scope.result = data;
+        $scope.trackResult = data;
     });
+
+    apiData.playlist.search($scope.searchQuery).then(function(data){
+        $scope.playlistResult = data;
+    });
+
+
 
 }]);

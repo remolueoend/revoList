@@ -14,15 +14,13 @@ revoList.app.controller('appController', ['$scope', 'me', '$location', '$route',
         var q = $scope.searchQuery;
         if(q && q.length) {
             $location.path('/search/' + encodeURI(q));
-            /*
-            if($location.path() === '/search'){
-                $location.search('searchQuery', encodeURI(q));
-                //$route.reload();
-            }else{
-                $location.path('/search').search('searchQuery', encodeURI(q));
-            }
-            */
         }
     };
+
+    $scope.$on('$locationChangeSuccess', function() {
+        if($location.path().indexOf('/search') !== 0){
+            $scope.searchQuery = '';
+        }
+    });
 
 }]);

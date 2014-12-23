@@ -1,16 +1,20 @@
 <partial title="Profile" ng-controller="profileController">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{user | username}}</h1>
+            <h1 ng-show="user._id === currentUser._id" class="page-header">My Profile</h1>
+            <h1 ng-show="user._id !== currentUser._id" class="page-header">{{user | username}}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <h2 class="page-header">Playlists</h2>
+            <h2 class="page-header" ng-show="user._id === currentUser._id">Your playlists</h2>
+            <h2 class="page-header" ng-show="user._id !== currentUser._id">{{user.firstName}}'s playlists</h2>
         </div>
     </div>
     <div class="playlists row">
-        <div class="display-playlist" ng-repeat="p in playlists" playlist="p"></div>
+        <div ng-repeat="playlist in playlists" ng-controller="playlistController" ng-init="init(playlist)">
+            <div class="display-playlist"></div>
+        </div>
         <div class="col-lg-12" ng-show="!playlists.length && user._id === currentUser._id">
             <h3>You don't have any playlists yet :(</h3>
             <div>Search for new songs and add them to a new playlist.</div>
@@ -19,4 +23,24 @@
             <h3>{{user | username}} doesn't have any playlists yet :(</h3>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header" ng-show="user._id === currentUser._id">Things you like</h2>
+            <h2 class="page-header" ng-show="user._id !== currentUser._id">Things {{user.firstName}} likes</h2>
+        </div>
+    </div>
+    <div class="playlists row">
+        <div ng-repeat="playlist in likes" ng-controller="playlistController" ng-init="init(playlist)">
+            <div class="display-playlist"></div>
+        </div>
+        <div class="col-lg-12" ng-show="!likes.length && user._id === currentUser._id">
+            <h3>You haven't liked any playlists yet</h3>
+            <div>Search for new playlists and hit the Like button!</div>
+        </div>
+        <div class="col-lg-12" ng-show="!likes.length && user._id !== currentUser._id">
+            <h3>{{user | username}} doesn't have any likes yet.</h3>
+        </div>
+    </div>
+
 </partial>

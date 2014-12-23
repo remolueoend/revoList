@@ -23,8 +23,10 @@ revoList.app.controller('addToModalController', ['$scope', 'apiData', 'me', func
         });
     };
 
-    $scope.removeToPlaylist = function(playlistId){
-
+    $scope.removeFromPlaylist = function(playlistId){
+        apiData.playlist.removeTrack(playlistId, $scope.track).then(function(){
+            $scope.$close();
+        });
     };
 
 }]);

@@ -1,10 +1,32 @@
-<partial title="Search" ng-controller="searchController">
+<partial title="Search" ng-controller="searchController" id="partial-search">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Search</h1>
         </div>
     </div>
-    <div class="results row">
-        <div class="display-track display-{{r.provider}}" ng-repeat="r in result" track="r" i="$index" playlist="result"></div>
-    </div>
+    <tabset>
+        <tab>
+            <tab-heading>
+                <i class="fa fa-volume-up"></i> Tracks
+            </tab-heading>
+            <div class="results row">
+                <div class="display-track display-{{r.provider}}" ng-repeat="r in trackResult" track="r" i="$index" playlist="trackResult" source-url="/search/{{searchQuery}}"></div>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="fa fa-folder"></i> Playlists
+            </tab-heading>
+            <div class="results row">
+                <div ng-repeat="p in playlistResult" ng-controller="playlistController" ng-init="init(p)">
+                    <div class="display-playlist"></div>
+                </div>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="fa fa-user"></i> Users
+            </tab-heading>
+        </tab>
+    </tabset>
 </partial>

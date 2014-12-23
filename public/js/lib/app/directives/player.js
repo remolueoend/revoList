@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.directive('playerUi', function(){
+revoList.app.directive('playerUi', ['$rootScope', '$location', function($rootScope, $location){
 
     function controller($scope, $element, player){
 
@@ -19,10 +19,19 @@ revoList.app.directive('playerUi', function(){
                 $scope.isPlaying = false;
             });
         });
-        player.on('trackLoaded', function(track){
+        player.on('trackLoaded', function(track, sourceUrl){
             $scope.currentTrack = track;
+            $scope.sourceUrl = sourceUrl;
             $($element).show();
         });
+
+        $scope.locateTrack = function(){
+            if($location.path() !== $scope.sourceUrl){
+                $location.path($scope.sourceUrl).hash('locate');
+            }else{
+                $rootScope.$broadcast('locateTrack', player.currentTrack);
+            }
+        };
     }
 
     return {
@@ -32,4 +41,4 @@ revoList.app.directive('playerUi', function(){
         templateUrl: '/partials/player'
     };
 
-});
+}]);

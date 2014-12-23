@@ -43,6 +43,10 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
                 return api.url('/user/me');
             };
 
+            layer.likes = function(userId){
+                return this.action('likes', userId);
+            };
+
             return layer;
         })(),
 
@@ -57,6 +61,14 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
                     data: track
                 });
             };
+
+            layer.removeTrack = function(playlistId, track){
+                return this.action('removeTrack', playlistId, {
+                    method: 'POST',
+                    data: track
+                });
+            };
+
             layer.byTrack = function(track){
                 return api.url('playlist/byTrack/' + track.provider + '/' + track.id);
             };
@@ -67,6 +79,22 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
 
             layer.dislike = function(playlistId){
                 return this.action('dislike', playlistId);
+            };
+
+            layer.changeTitle = function(playlistId, newTitle){
+                return this.action('changeTitle', playlistId, {
+                    params: {
+                        title: newTitle
+                    }
+                });
+            };
+
+            layer.search = function(query){
+                return this.action('search', void 0, {
+                    params: {
+                        q: query
+                    }
+                });
             };
 
             return layer;
