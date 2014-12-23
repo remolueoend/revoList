@@ -5,12 +5,15 @@
         </div>
     </div>
 
-    <div class="playlists row">
+    <div class="playlists row" ng-show="playlists">
         <div ng-repeat="playlist in playlists" ng-controller="playlistController" ng-init="init(playlist)">
             <div class="display-playlist"></div>
         </div>
         <div class="col-lg-12" ng-show="!playlists.length">
             <h3>There are no playlists yet :(</h3>
         </div>
+    </div>
+    <div class="col-lg-12" ng-show="!playlists">
+        <h3>Loading, please stand by..</h3>
     </div>
 </partial>
