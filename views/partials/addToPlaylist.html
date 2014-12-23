@@ -14,7 +14,8 @@
             </div>
         </div>
         <div class="new-playlist-container">
-            <h6>Or create a new playlist for this track:</h6>
+            <h6 ng-show="playlists.length !== 0">Or create a new playlist for this track:</h6>
+            <h6 ng-show="playlists.length === 0">Add a new playlist title and hit Return:</h6>
             <form ng-submit="addToNewPlaylist()">
                 <div class="input-group">
                     <input class="form-control" type="text" ng-model="newPlaylist" placeholder="playlist title" />
