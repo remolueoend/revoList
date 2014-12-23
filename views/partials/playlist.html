@@ -1,17 +1,19 @@
 <partial title="Playlist" ng-controller="playlistController" id="partial-playlist">
     <div class="row">
         <div class="col-lg-12">
-            <div class="pull-right" ng-show="playlist.owner !== me._id">
-                <a class="btn btn-danger btn-lg" mobile-class="btn-lg" ng-click="dislike()" ng-show="liked">
-                    <i class="fa fa-heart-o"></i>
+            <div ng-show="tracks">
+                <div class="pull-right" ng-show="playlist.owner !== me._id">
+                    <a class="btn btn-danger btn-lg" mobile-class="btn-lg" ng-click="dislike()" ng-show="liked">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
+                    <a class="btn btn-default btn-lg" mobile-class="btn-lg" ng-click="like()" ng-show="!liked">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+                <a class="btn btn-default btn-lg pull-right" mobile-class="btn-lg" ng-click="edit()" ng-show="playlist.owner === me._id">
+                    <i class="fa fa-edit"></i>
                 </a>
-                <a class="btn btn-default btn-lg" mobile-class="btn-lg" ng-click="like()" ng-show="!liked">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-            <a class="btn btn-default btn-lg pull-right" mobile-class="btn-lg" ng-click="edit()" ng-show="playlist.owner === me._id">
-                <i class="fa fa-edit"></i>
-            </a>
+             </div>
             <h1 class="page-header">{{playlist.title}}</h1>
             <a href="/profile/{{ownerInstance._id}}" ng-show="me._id !== ownerInstance._id"><h5 class="owner">by {{ownerInstance | username}}</h5></a>
         </div>
