@@ -31,7 +31,7 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
         },
 
         action: function(name, id, config){
-            return api.url(this.api.entityType + '/' + (typeof id !== 'undefined' ? id + '/' : '') + name, config);
+            return api.url(this.api.entityType + '/' + (id != null ? id + '/' : '') + name, config);
         }
     };
 
@@ -45,6 +45,14 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
 
             layer.likes = function(userId){
                 return this.action('likes', userId);
+            };
+
+            layer.search = function(query){
+                return this.action('search', void 0, {
+                    params: {
+                        q: query
+                    }
+                });
             };
 
             return layer;

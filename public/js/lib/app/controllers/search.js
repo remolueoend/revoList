@@ -16,6 +16,19 @@ revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams'
         $scope.playlistResult = data;
     });
 
+    apiData.user.search($scope.searchQuery).then(function(data){
+        $scope.userResult = data;
+        $scope.userResult.forEach(function(u){
+            setUserPic(u);
+        });
+    });
+
+    function setUserPic(user){
+        FB.api('/' + user.id + '/picture?type=large', function(resp){
+            user.picture = resp.data.url;
+        })
+    }
+
 
 
 }]);
