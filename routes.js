@@ -13,11 +13,17 @@ exports.partials = function (req, res) {
 };
 
 exports.config = function(req, res){
-    var localAddr = ip.address();
+    var apiAddr = ip.address(),
+        apiPort = '3000';
+    if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP){
+        apiAddr = 'revolistapi-w1we.rhcloud.com';
+        apiPort = 80;
+    }
+
     res.json({
         api: {
-            url: 'http://' + localAddr + ':2000/:entity/:id?access_token=:accessToken',
-            base: 'http://' + localAddr + ':2000{{path}}'
+            url: 'http://' + apiAddr + ':' + apiPort + '/:entity/:id?access_token=:accessToken',
+            base: 'http://' + apiAddr + ':' + apiPort + '{{path}}'
         }
     });
 };
