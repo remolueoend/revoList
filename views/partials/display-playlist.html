@@ -27,10 +27,19 @@
         </a>
         <div>
             <div ng-show="playlist.owner !== me._id">
-                <a class="btn btn-default" mobile-class="btn-lg" ng-click="dislike()" ng-show="liked">Dislike</a>
-                <a class="btn btn-default" mobile-class="btn-lg" ng-click="like()" ng-show="!liked">Like</a>
+                <a class="btn btn-danger" mobile-class="btn-lg" ng-click="dislike()" ng-show="liked">
+                    <i class="fa fa-heart-o"></i>
+                    Liked
+                </a>
+                <a class="btn btn-default" mobile-class="btn-lg" ng-click="like()" ng-show="!liked">
+                    <i class="fa fa-heart"></i>
+                    Like
+                </a>
             </div>
-            <a class="btn btn-default" mobile-class="btn-lg" ng-click="edit()" ng-show="playlist.owner === me._id">Edit</a>
+            <a class="btn btn-default" mobile-class="btn-lg" ng-click="edit()" ng-show="playlist.owner === me._id">
+                <i class="fa fa-edit"></i>
+                Edit
+            </a>
         </div>
     </div>
 </div>

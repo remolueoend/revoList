@@ -160,4 +160,8 @@
 #partial-search .results {
   margin-top: 5px; }
 
+#partial-playlist h5.owner {
+  margin-top: -15px;
+  margin-bottom: 20px; }
+
 /*# sourceMappingURL=main.css.map */
