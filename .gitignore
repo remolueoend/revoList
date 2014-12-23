@@ -2,10 +2,6 @@
 log
 node_modules
 .sass-cache
-public/js/bower_components
-public/js/dist
-
-
-
-
+# public/js/bower_components
+# public/js/dist
 public/images/Thumbs.db
