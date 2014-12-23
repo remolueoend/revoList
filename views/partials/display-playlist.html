@@ -1,11 +1,14 @@
 <div>
     <div mobile-class="col-xs-12:col-xs-6" class="col-sm-4 col-md-3 col-lg-2 track-cell">
         <a href="/playlist/{{playlist._id}}">
-            <div class="thumbnail rl-overlay">
+            <div class="thumbnail">
                 <div>
-                    <div class="track-thumbnail ratio-box r2-1">
+                    <div class="track-thumbnail ratio-box r2-1 rl-overlay">
                         <div class="content">
                             <img src="{{playlist.thumbnail || '/images/default-thumbnail-playlist.png'}}" />
+                        </div>
+                        <div class="play-overlay overlay">
+                            <i class="fa fa-folder-open"></i>
                         </div>
                     </div>
                     <div class="meta">
@@ -13,14 +16,11 @@
                             <h5>{{playlist.title}}</h5>
                         </div>
                         <div class="author">
-                            by {{ownerInstance | username}}
+                            by <a href="/profile/{{ownerInstance._id}}">{{ownerInstance | username}}</a>
                         </div>
                         <div class="info">
                             {{tracks.length | tracksCount}}, {{playlist.likes.length | likesCount}}
                         </div>
-                    </div>
-                    <div class="play-overlay overlay">
-                        <i class="fa fa-folder-open"></i>
                     </div>
                 </div>
             </div>

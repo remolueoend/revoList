@@ -119,8 +119,8 @@
     .display-track .thumbnail .play-overlay .fa, .display-playlist .thumbnail .play-overlay .fa {
       font-size: 60px;
       color: white;
-      margin-top: 25%;
-      margin-left: 40%; }
+      margin-top: 12%;
+      margin-left: 39%; }
     .display-track .thumbnail .play-overlay .fa-play, .display-track .thumbnail .play-overlay .fa-pause, .display-playlist .thumbnail .play-overlay .fa-play, .display-playlist .thumbnail .play-overlay .fa-pause {
       display: none; }
     .display-track .thumbnail .play-overlay .fa-play, .display-playlist .thumbnail .play-overlay .fa-play {
