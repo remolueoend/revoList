@@ -1,0 +1,27 @@
+{
+  "name": "jquery.cookie",
+  "version": "1.4.1",
+  "main": [
+    "src/jquery.cookie.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.2"
+  },
+  "ignore": [
+    "test",
+    ".*",
+    "*.json",
+    "*.md",
+    "*.txt",
+    "Gruntfile.js"
+  ],
+  "_cacheHeaders": {
+    "ETag": "\"aeb793d27286c7f0b915c3aaee24c3b7d04d71fd\"",
+    "Content-Type": "application/x-gzip",
+    "Content-Disposition": "attachment; filename=carhartl-jquery-cookie-v1.4.1-24-gaeb793d.tar.gz"
+  },
+  "_release": "e-tag:aeb793d27",
+  "_source": "https://github.com/carhartl/jquery-cookie/tarball/master",
+  "_target": "*",
+  "_originalSource": "https://github.com/carhartl/jquery-cookie/tarball/master"
+}
