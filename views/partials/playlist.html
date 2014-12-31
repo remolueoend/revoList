@@ -1,7 +1,7 @@
 <partial title="Playlist" ng-controller="playlistController" id="partial-playlist">
     <div class="row">
-        <div>
-            <div ng-show="tracks">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div ng-show="tracks" class="pull-right" style="margin-top: 40px;">
                 <div class="pull-right" ng-show="playlist.owner !== me._id">
                     <a class="btn btn-danger btn-lg" mobile-class="btn-lg" ng-click="dislike()" ng-show="liked">
                         <i class="fa fa-heart-o"></i>
