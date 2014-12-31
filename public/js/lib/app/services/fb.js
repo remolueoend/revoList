@@ -34,6 +34,8 @@ revoList.app.factory('facebook', ['$q', 'config', function($q, config){
                 resolve(d);
             };
         }
+
+        return d.promise;
     }
 
 }]);
