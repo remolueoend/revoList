@@ -18,8 +18,8 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
             return this.api.query(filter);
         },
 
-        create: function(model){
-            return this.api.create(model);
+        create: function(model, form){
+            return this.api.create(model, form);
         },
 
         update: function(model){
@@ -30,8 +30,9 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
             return this.api.remove(model);
         },
 
-        action: function(name, id, config){
-            return api.url(this.api.entityType + '/' + (id != null ? id + '/' : '') + name, config);
+        action: function(name, id, config, form){
+            return api.url(this.api.entityType + '/' +
+                (id != null ? id + '/' : '') + name, config, form);
         }
     };
 
@@ -89,12 +90,12 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
                 return this.action('dislike', playlistId);
             };
 
-            layer.changeTitle = function(playlistId, newTitle){
+            layer.changeTitle = function(playlistId, newTitle, form){
                 return this.action('changeTitle', playlistId, {
                     params: {
                         title: newTitle
                     }
-                });
+                }, form);
             };
 
             layer.search = function(query){
@@ -116,7 +117,7 @@ revoList.app.factory('apiData', ['api', '$q', '$http', function(api, $q, $http){
         track: (function(){
             var layer = new DataLayer('track');
             return layer;
-        })(),
+        })()
     }
 
 }]);

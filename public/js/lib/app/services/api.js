@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', function($resource, $http, $q, config, auth){
+revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', 'validator', function($resource, $http, $q, config, auth, validator){
 
     /**
      * Returns a promise resolving the API configuration.
@@ -134,12 +134,15 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
          * @param {object} model The model data of the entity
          * @returns {promise} An angular promise
          */
-        create: function(model){
+        create: function(model, form){
             var d = $q.defer();
             this.resource().then(function(res){
                 var entity = new res(model);
                 entity.$create(function(data){
                     d.resolve(data);
+                    validator.validateForm(form, {status: 200});
+                }, function(resp){
+                    validator.validateForm(form, resp);
                 });
             });
 
@@ -188,8 +191,9 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
      * Calls the provided url on the API.
      * @param {string} path The url to call
      * @param {object} config The request config.
+     * @param {FormController} form An optional form instance.
      */
-    Api.url = function(path, config){
+    Api.url = function(path, config, form){
         config = config || {};
         config.params = config.params || {};
         if(path[0] !== '/') path = '/' + path;
@@ -199,7 +203,11 @@ revoList.app.factory('api', ['$resource', '$http', '$q', 'config', 'auth', funct
             config.url = r[0].base.replace('{{path}}', path);
             config.params.access_token = r[1];
             $http(config).then(function(resp){
+                validator.validateForm(form, resp);
                 d.resolve(resp.data);
+            }, function(resp){
+                validator.validateForm(form, resp);
+                d.reject(resp);
             });
         });
 

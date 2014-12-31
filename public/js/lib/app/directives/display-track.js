@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.directive('displayTrack', ['player', '$modal', '$timeout', '$location', '$rootScope', function(player, $modal, $timeout, $location, $rootScope){
+revoList.app.directive('displayTrack', ['player', '$modal', '$timeout', '$location', '$rootScope', 'notify', function(player, $modal, $timeout, $location, $rootScope, notify){
 
     function link(scope, elem, attr){
 
@@ -89,7 +89,10 @@ revoList.app.directive('displayTrack', ['player', '$modal', '$timeout', '$locati
         scope.addToPlaylist = function(){
             var mScope = scope.$new();
             mScope.track = scope.track;
-            $modal.open({templateUrl: '/partials/addToPlaylist', size: 'md', scope: mScope});
+            $modal.open({templateUrl: '/partials/addToPlaylist', size: 'md', scope: mScope})
+                .result.then(function(msg){
+                    notify.success(msg);
+                });
         };
 
 

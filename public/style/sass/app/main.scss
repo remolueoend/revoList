@@ -17,6 +17,47 @@
   }
 }
 
+.alerts{
+  position: fixed;
+  z-index: 9999;
+  right: 5px;
+  top: 5px;
+
+  notification{
+    display: block;
+    position: relative;
+
+    &.ng-enter{
+      margin-top: -57px;
+      transition: all 0.2s ease;
+
+      &.ng-enter-active{
+        margin-top: 0;
+      }
+    }
+
+    &.ng-leave{
+      left: 0;
+      transition: all 0.4s linear;
+
+      &.ng-leave-active{
+        left: 500px;
+      }
+    }
+
+    .alert{
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+  }
+}
+
+form{
+  .val-message{
+    color: #a94442;
+  }
+}
+
 #page-wrapper{
   max-width: 2000px;
   margin: 0 auto;

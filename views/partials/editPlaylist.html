@@ -1,9 +1,10 @@
 <partial title="edit playlist" ng-controller="editPlaylistController" id="partial-edit-playlist">
     <div class="modal-view-content">
         <h6>Change the title of your playlist:</h6>
-        <form ng-submit="changeTitle()">
-            <div class="input-group">
-                <input class="form-control" type="text" ng-model="newTitle" placeholder="playlist title" />
+        <form ng-submit="changeTitle()" name="form">
+            <span class="val-message" ng-if="form.title.$error.serverError">{{form.title.$error.serverError}}</span>
+            <div class="input-group" ng-class="{'has-error': form.title.$invalid}">
+                <input class="form-control" type="text" name="title" required ng-model="newTitle" placeholder="playlist title" />
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">
                         <i class="fa fa-save"></i>
@@ -36,7 +37,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-danger" ng-click="delete()">Delete Playlist</a>
-        <a class="btn btn-success" ng-click="$close()">Cancel</a>
+        <a class="btn btn-danger pull-left" ng-click="delete()">Delete Playlist</a>
+        <a class="btn btn-success" ng-click="$dismiss()">Done</a>
     </div>
 </partial>

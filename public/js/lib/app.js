@@ -14,7 +14,7 @@ var revoList = (function(){
          * Angular app instance of the revoList app.
          * @type {module}
          */
-        app: angular.module('revo-list', ['ngRoute', 'ngResource', 'ui.bootstrap']),
+        app: angular.module('revo-list', ['ngRoute', 'ngResource', 'ngAnimate', 'ui.bootstrap']),
 
         /**
          * Title of app, used for page titles and so on

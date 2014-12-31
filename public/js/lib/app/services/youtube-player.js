@@ -39,7 +39,7 @@ revoList.app.service('youtubePlayer', [function(){
                 },
                 events: {
                     'onReady': function(){ _this.play() },
-                    'onStateChange': function(e){ _this.stateChanged(e) }
+                    'onStateChange': function(e){ _this.stateChanged(e); }
                 }
             });
         },

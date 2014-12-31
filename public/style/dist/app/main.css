@@ -8,6 +8,31 @@
   background-color: #eee;
   color: #333; }
 
+.alerts {
+  position: fixed;
+  z-index: 9999;
+  right: 5px;
+  top: 5px; }
+  .alerts notification {
+    display: block;
+    position: relative; }
+    .alerts notification.ng-enter {
+      margin-top: -57px;
+      transition: all 0.2s ease; }
+      .alerts notification.ng-enter.ng-enter-active {
+        margin-top: 0; }
+    .alerts notification.ng-leave {
+      left: 0;
+      transition: all 0.4s linear; }
+      .alerts notification.ng-leave.ng-leave-active {
+        left: 500px; }
+    .alerts notification .alert {
+      margin-bottom: 5px;
+      display: inline-block; }
+
+form .val-message {
+  color: #a94442; }
+
 #page-wrapper {
   max-width: 2000px;
   margin: 0 auto;

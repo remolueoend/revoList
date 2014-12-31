@@ -90,7 +90,7 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
 
         function _setAccessToken(host, authResp){
             $.cookie('revoList_' + host, authResp.access_token, {expires: 1, path: '/'});
-            $.cookie('revoList_' + host + '_v', _currentVersion, {path: '/'});
+            $.cookie('revoList_' + host + '_v', _currentVersion, {expires: 365, path: '/'});
         }
 
         function _getAccessToken(host){

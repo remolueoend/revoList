@@ -63,6 +63,13 @@
     </script>
 
 
+    <div class="alerts" ng-controller="alertController">
+        <notification ng-repeat="a in alerts" alerts="alerts" index="$index">
+            <span class="alert alert-{{a.type}} pull-right" role="alert">
+                {{a.msg}}
+            </span>
+        </notification>
+    </div>
 
 
     <div id="wrapper">
@@ -83,20 +90,22 @@
                 </div>
             </div>
 
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="sidebar-search">
-                    <form ng-submit="save()">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" ng-model="searchQuery" placeholder="Search for tracks, playlists and people" />
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div style="margin: 0 15px 5px">
+                        <form ng-submit="search()">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" ng-model="searchQuery" placeholder="Search for tracks, playlists and people" />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit" ng-click="search()">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                        </div>
-                    </form>
-                </li>
-            </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <!-- VIEW PLACEHOLDER -->
@@ -139,6 +148,7 @@
         <!-- modules -->
         <script type="text/javascript" src="/js/bower_components/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="/js/bower_components/angular-animate/angular-animate.min.js"></script>
         <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
         <!-- ANGULARJS APP -->
