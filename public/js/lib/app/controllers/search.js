@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams', function($scope, apiData, $routeParams){
+revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams', 'facebook', function($scope, apiData, $routeParams, facebook){
 
     $scope.searchQuery = $routeParams.query;
 
@@ -24,9 +24,11 @@ revoList.app.controller('searchController', ['$scope', 'apiData', '$routeParams'
     });
 
     function setUserPic(user){
-        FB.api('/' + user.id + '/picture?type=large', function(resp){
-            user.picture = resp.data.url;
-        })
+        facebook().then(function(fb){
+            fb.api('/' + user.id + '/picture?type=large', function(resp){
+                user.picture = resp.data.url;
+            })
+        });
     }
 
 

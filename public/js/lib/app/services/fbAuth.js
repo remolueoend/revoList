@@ -4,20 +4,14 @@
 
 'use strict';
 
-revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', function($q, $modal, log, config){
+revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', 'facebook', function($q, $modal, log, config, facebook){
 
     var logger = new log('fbAuth');
 
-    function authInfo(fb){
+    function authInfo(){
         var d = $q.defer();
 
-        config().then(function(cfg){
-            fb.init({
-                appId      : cfg.FB.appId,
-                xfbml      : false,
-                version    : 'v2.1',
-                status     : true
-            });
+        facebook().then(function(fb){
 
             fb.getLoginStatus(function(response){
                 if(response.status === 'connected'){
@@ -35,22 +29,11 @@ revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', function($q, $m
         return d.promise;
     }
 
-    function resolve(deferred){
-        authInfo(window.FB).then(function(resp){
-            deferred.resolve({uid: resp.userID, accessToken: resp.accessToken});
-        });
-    }
-
     return function fbAuth(){
         var d = $q.defer();
-
-        if(window.FB){
-            resolve(d);
-        }else{
-            window.fbAsyncInit = function() {
-                resolve(d);
-            };
-        }
+        authInfo().then(function(resp){
+            d.resolve({uid: resp.userID, accessToken: resp.accessToken});
+        });
 
         return d.promise;
     };
