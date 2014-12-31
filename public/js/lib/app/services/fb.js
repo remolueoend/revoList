@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.factory('facebook', 'config', ['$q', function($q, config){
+revoList.app.factory('facebook', ['$q', 'config', function($q, config){
 
     var isInit = false;
 
