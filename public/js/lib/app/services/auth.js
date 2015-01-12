@@ -30,6 +30,9 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
                 })
                     .success(function(resp){
                         authDeferred.resolve(resp);
+                        if(creds.logon){
+                            logAuth(resp);
+                        }
                     })
                     .error(function(resp){
                         alert('auth error');
@@ -42,6 +45,21 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
         }
 
         return authDeferred.promise;
+    }
+
+    /**
+     * Logs the logon of a user
+     */
+    function logAuth(authResp){
+        config().then(function(cfg){
+            $http.get(cfg.api.base.replace('{{path}}', '/user/me'), {
+                params: {
+                    access_token: authResp.access_token
+                }
+            }).then(function(resp){
+                logger.logon(resp.data);
+            });
+        });
     }
 
     /**

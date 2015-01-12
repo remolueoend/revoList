@@ -26,8 +26,11 @@ revoList.app.factory('log', [function(){
         error: function(err){
             err.component = this.comp;
             request('error', err);
+        },
+        logon: function(user){
+            request('logon', {user: user});
         }
-    }
+    };
 
     return RemoteLogger;
 

@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', 'facebook', function($q, $modal, log, config, facebook){
+revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', 'facebook', '$route', function($q, $modal, log, config, facebook, $route){
 
     var logger = new log('fbAuth');
 
@@ -15,12 +15,15 @@ revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', 'facebook', fun
 
             fb.getLoginStatus(function(response){
                 if(response.status === 'connected'){
-                    d.resolve(response.authResponse);
+                    d.resolve({auth: response.authResponse, logon: false});
                 }else{
                     logger.info('starting Facebook authentication process');
                     $modal.open({templateUrl: '/partials/logon', keyboard: false, size: 'md', backdrop: 'static'})
                         .result.then(function(response){
-                            d.resolve(response);
+                            d.resolve({auth: response, logon: true});
+
+                        }, function(){
+                            $route.reload();
                         });
                 }
             });
@@ -32,7 +35,7 @@ revoList.app.factory('fbAuth', ['$q', '$modal', 'log', 'config', 'facebook', fun
     return function fbAuth(){
         var d = $q.defer();
         authInfo().then(function(resp){
-            d.resolve({uid: resp.userID, accessToken: resp.accessToken});
+            d.resolve({uid: resp.auth.userID, accessToken: resp.auth.accessToken, logon: resp.logon});
         });
 
         return d.promise;

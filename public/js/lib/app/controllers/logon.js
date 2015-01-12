@@ -8,7 +8,11 @@ revoList.app.controller('logonController', ['$scope', function($scope){
 
     $scope.logon = function(){
         FB.login(function(response){
-            $scope.$close(response.authResponse);
+            if(response.authResponse){
+                $scope.$close(response.authResponse);
+            }else{
+                //$scope.$dismiss();
+            }
         });
     };
 
