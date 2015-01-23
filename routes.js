@@ -2,30 +2,40 @@
 'use strict';
 
 var ip = require('ip'),
-    sendgrid = require('sendgrid')('zumstrem@students.zhaw.ch', 'xd56Kh/mj');
+    sendgrid = require('sendgrid')('zumstrem@students.zhaw.ch', 'xd56Kh/mj'),
+    fs = require('fs'),
+    path = require('path');
 
 exports.index = function(req, res){
     res.render('layout');
 };
 
-exports.partials = function (req, res) {
+exports.partials = function (req, res, next) {
     var name = req.params.name;
-    res.render('partials/' + name);
+    if(fs.existsSync(path.join(__dirname, 'views/partials', name + '.html'))){
+        res.render('partials/' + name);
+    }else{
+        var err = new Error('Not Found');
+        err.status = 410;
+        err.desc = 'Oops. You\'re on the wrong way here..';
+        err.help = '<a href="/">Click here to get home save.</a>';
+        next(err);
+    }
 };
 
 exports.config = function(req, res){
     var apiAddr = ip.address(),
-        apiPort = '2000';
+        apiPort = ':2000';
     if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP){
         apiAddr = 'revolistapi-w1we.rhcloud.com';
-        apiPort = 80;
+        apiPort = '';
     }
 
     res.json({
         api: {
             host: apiAddr,
-            url: 'http://' + apiAddr + ':' + apiPort + '/:entity/:id?access_token=:accessToken',
-            base: 'http://' + apiAddr + ':' + apiPort + '{{path}}'
+            url: 'http://' + apiAddr + apiPort + '/:entity/:id?access_token=:accessToken',
+            base: 'http://' + apiAddr + apiPort + '{{path}}'
         },
         FB: (function(){
             var appId = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP ?

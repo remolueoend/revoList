@@ -4,7 +4,7 @@
 
 'use strict';
 
-revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function($http, config, fbAuth, $q, log){
+revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', '$route', function($http, config, fbAuth, $q, log, $route){
 
     var isAuthenticating = false,
         authDeferred,
@@ -35,8 +35,13 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
                         }
                     })
                     .error(function(resp){
-                        alert('auth error');
+                        /**
+                         * WORST CASE! Delete the local possible invalid access token and refresh the page:
+                         */
                         authDeferred.reject(resp);
+                        auth.accessToken.remove().then(function(){
+                            $route.reload();
+                        });
                     })
                     .finally(function(){
                         isAuthenticating = false;
@@ -106,9 +111,13 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
 
         var _currentVersion = '1';
 
+        function getCookieName(host){
+            return 'revoList_' + host;
+        }
+
         function _setAccessToken(host, authResp){
-            $.cookie('revoList_' + host, authResp.access_token, {expires: 1, path: '/'});
-            $.cookie('revoList_' + host + '_v', _currentVersion, {expires: 365, path: '/'});
+            $.cookie(getCookieName(host), authResp.access_token, {expires: 1, path: '/'});
+            $.cookie(getCookieName(host) + '_v', _currentVersion, {expires: 365, path: '/'});
         }
 
         function _getAccessToken(host){
@@ -136,6 +145,17 @@ revoList.app.factory('auth', ['$http', 'config', 'fbAuth', '$q', 'log', function
 
             return d.promise;
         }
+
+        accessToken.remove = function(){
+            var d = $q.defer();
+
+            config().then(function(cfg){
+                $.removeCookie(getCookieName(cfg.api.host));
+                d.resolve();
+            });
+
+            return d.promise;
+        };
 
         return accessToken;
     })();

@@ -5,7 +5,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     routes = require('./routes'),
-    winston = require('winston');
+    winston = require('winston'),
+    ejs = require('ejs');
 
 var app = express();
 
@@ -14,6 +15,7 @@ app.engine('html', require('ejs').renderFile);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -33,6 +35,7 @@ app.get('*', routes.index);
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
+    err.desc = 'Oops. You\'re on the wrong way here :(';
     next(err);
 });
 
@@ -41,10 +44,15 @@ app.use(function(req, res, next) {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+    err.status = err.status || 500;
+    err.message = err.message || "Internal server error";
+    err.desc = err.desc || 'Oops. A wild error appeared while getting this page :(';
+    if(err.status !== 410){
+        res.status(err.status || 500);
+    }
+
     res.render('error', {
-        message: err.message,
-        error: app.get('env') === 'development' ? err : {}
+        err: err
     });
 });
 
