@@ -1,0 +1,16 @@
+{
+  "api": {
+    "apiHost": {
+      "dev": "localhost:2000",
+      "prod": "revolistapi-w1we.rhcloud.com"
+    },
+    "url": "http://{{apiAddr}}{{apiPort}}/:entity/:id?access_token=:accessToken",
+    "base": "http://{{apiAddr}}{{apiPort}}{{path}}"
+  },
+  "FB": {
+    "appId": {
+      "prod": "1551776555034153",
+      "dev": "1574452112766597"
+    }
+  }
+}

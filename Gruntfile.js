@@ -9,8 +9,8 @@ module.exports = function(grunt){
             app: {
                 files: {
                     'public/js/dist/app.min.js': [
-                        'public/js/lib/app.js',
-                        'public/js/lib/app/**/*.js']
+                        'app/public/js/lib/app.js',
+                        'app/public/js/lib/app/**/*.js']
                 }
             }
         },
@@ -19,9 +19,9 @@ module.exports = function(grunt){
             app: {
                 files: [{
                     expand: true,
-                    cwd: 'public/style/sass/app',
+                    cwd: 'app/public/style/sass/app',
                     src: ['**/*.scss'],
-                    dest: 'public/style/dist/app',
+                    dest: 'app/public/style/dist/app',
                     ext: '.css'
                 }]
             }
@@ -29,11 +29,11 @@ module.exports = function(grunt){
 
         watch: {
             app_js: {
-                files: ['public/js/lib/app.js', 'public/js/lib/app/**/*.js'],
+                files: ['app/public/js/lib/app.js', 'app/public/js/lib/app/**/*.js'],
                 tasks: ['uglify:app']
             },
             app_sass: {
-                files: ['public/style/sass/app/**/*.scss'],
+                files: ['app/public/style/sass/app/**/*.scss'],
                 tasks: ['sass:app']
             }
 

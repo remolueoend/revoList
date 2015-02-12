@@ -5,7 +5,7 @@
   "main": "bin/www",
   "scripts": {
     "start": "node bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "revoList"
@@ -25,6 +25,7 @@
     "colors": "^1.0.3",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
+    "deferred": "^0.7.2",
     "ejs": "^1.0.0",
     "express": "^4.9.8",
     "ip": "https://github.com/indutny/node-ip/tarball/master",

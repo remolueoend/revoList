@@ -4,7 +4,20 @@
 var ip = require('ip'),
     sendgrid = require('sendgrid')('zumstrem@students.zhaw.ch', 'xd56Kh/mj'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    // defaults: localhost:2000
+    apiAddr = ip.address(),
+    apiPort = ':2000',
+    fbAppId = '1574452112766597';
+
+// overwrite api connetion values and FB app id:
+if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP){
+    apiAddr = 'revolistapi-w1we.rhcloud.com';
+    apiPort = '';
+    fbAppId = '1551776555034153';
+}
+
+
 
 exports.index = function(req, res){
     res.render('layout');
@@ -24,27 +37,15 @@ exports.partials = function (req, res, next) {
 };
 
 exports.config = function(req, res){
-    var apiAddr = ip.address(),
-        apiPort = ':2000';
-    if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP){
-        apiAddr = 'revolistapi-w1we.rhcloud.com';
-        apiPort = '';
-    }
-
     res.json({
         api: {
             host: apiAddr,
             url: 'http://' + apiAddr + apiPort + '/:entity/:id?access_token=:accessToken',
             base: 'http://' + apiAddr + apiPort + '{{path}}'
         },
-        FB: (function(){
-            var appId = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP ?
-                '1551776555034153' : '1574452112766597';
-
-            return {
-                appId: appId
-            }
-        })()
+        FB: {
+            appId: fbAppId
+        }
     });
 };
 

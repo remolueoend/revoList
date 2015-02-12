@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var debug = require('debug')('revoList'),
-    app = require('../app'),
+    app = require('../app/revolist'),
     colors = require('colors');
 
 var ipAddress = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
