@@ -4,6 +4,7 @@ node_js:
 
 before_install:
   - npm install -g npm
+  - gem install sass
 
 before_script:
   - npm install -g mocha
