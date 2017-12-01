@@ -26,7 +26,7 @@
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
     "deferred": "^0.7.2",
-    "ejs": "^1.0.0",
+    "ejs": "^2.5.5",
     "express": "^4.9.8",
     "ip": "https://github.com/indutny/node-ip/tarball/master",
     "morgan": "~1.0.0",
